@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Task 4 • E-commerce Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.12);
+      --text:#eef3ff;
+      --muted: rgba(238,243,255,0.65);
+      --brand:#7c4dff;
+      --brand2:#20d6ff;
+      --good:#18ff9b;
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --r: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Poppins,system-ui,Segoe UI,Roboto,Arial;
+      background: radial-gradient(1200px 600px at 25% 10%, rgba(124,77,255,.35), transparent 60%),
+                  radial-gradient(900px 500px at 80% 25%, rgba(32,214,255,.22), transparent 55%),
+                  radial-gradient(700px 500px at 50% 95%, rgba(24,255,155,.10), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      padding:22px;
+    }
+    .wrap{width:min(1180px,100%); margin:0 auto}
+    .nav{
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      padding:14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900}
+    .dot{width:10px;height:10px;border-radius:50%; background:linear-gradient(135deg,var(--brand),var(--brand2))}
+    .search{
+      flex:1;
+      display:flex; align-items:center; gap:10px;
+      max-width:520px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+    }
+    .search input{
+      flex:1; border:none; outline:none; background:transparent; color:var(--text); font-family:inherit;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .hero{
+      margin-top:16px;
+      padding:18px;
+      border-radius: var(--r);
+      background: linear-gradient(135deg, rgba(124,77,255,.28), rgba(32,214,255,.14));
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      flex-wrap:wrap;
+    }
+    .hero h1{margin:0; font-size:28px}
+    .hero p{margin:6px 0 0; color:var(--muted)}
+    .filters{
+      margin-top:14px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center;
+    }
+    select{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color:var(--text);
+      outline:none;
+      font-family:inherit;
+      cursor:pointer;
+    }
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:12px;
+    }
+    @media (max-width: 1050px){ .grid{grid-template-columns: repeat(3,1fr)} }
+    @media (max-width: 760px){ .grid{grid-template-columns: repeat(2,1fr)} }
+    @media (max-width: 520px){ .grid{grid-template-columns: 1fr} }
+
+    .card{
+      background: rgba(255,255,255,0.06);
+      border:1px solid var(--stroke);
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      display:flex; flex-direction:column;
+      min-height: 260px;
+    }
+    .img{
+      height:120px;
+      background: linear-gradient(135deg, rgba(124,77,255,.85), rgba(32,214,255,.55));
+    }
+    .pad{padding:12px}
+    .name{margin:0; font-weight:900}
+    .meta{margin:6px 0 0; color:var(--muted); font-size:12.5px; line-height:1.45}
+    .row{
+      margin-top:auto;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px;
+      border-top:1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.18);
+    }
+    .price{font-weight:900}
+    .btn{
+      border:none;
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      background: rgba(255,255,255,0.10);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.14);
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      color:#061021;
+      border:none;
+    }
+
+    .cartBar{
+      position:sticky;
+      bottom:14px;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius: 18px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .small{font-size:12px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <div class="brand"><span class="dot"></span> ShopSpark</div>
+      <div class="search">
+        <span style="opacity:.7">🔎</span>
+        <input id="q" placeholder="Search products...">
+        <span id="count" class="small"></span>
+      </div>
+      <button class="chip" id="clear">Clear</button>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h1>Task 4 • E-commerce Website</h1>
+        <p>Visually appealing • Categorized • Searchable • Add-to-cart (demo)</p>
+      </div>
+      <button class="btn primary" id="checkout">Checkout</button>
+    </div>
+
+    <div class="filters">
+      <select id="cat"></select>
+      <select id="sort">
+        <option value="featured">Sort: Featured</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+      </select>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="cartBar">
+      <div>
+        <div style="font-weight:900">Cart</div>
+        <div class="small"><span id="items">0</span> items • Total ₹<span id="total">0</span></div>
+      </div>
+      <div class="small" id="last">No recent action.</div>
+    </div>
+  </div>
+
+<script>
+  const products = [
+    {cat:"Fashion", name:"Oversized Hoodie", price:799, desc:"Soft fabric, premium feel. Perfect streetwear vibe."},
+    {cat:"Fashion", name:"Sneakers Pro", price:1499, desc:"Comfort cushioning + clean minimal design."},
+    {cat:"Electronics", name:"Wireless Earbuds", price:1299, desc:"Noise isolation, long battery, stable connection."},
+    {cat:"Electronics", name:"Smart Watch", price:1899, desc:"Fitness tracking + notifications in style."},
+    {cat:"Home", name:"Aroma Diffuser", price:699, desc:"Relaxing fragrance + ambient glow."},
+    {cat:"Home", name:"Desk Lamp", price:499, desc:"Warm light, study-friendly, modern look."},
+    {cat:"Beauty", name:"Skin Care Kit", price:999, desc:"Cleanse, hydrate, glow — daily routine pack."},
+    {cat:"Beauty", name:"Perfume Mist", price:599, desc:"Fresh notes for everyday confidence."},
+  ];
+
+  const $ = (id)=>document.getElementById(id);
+  const categories = ["All", ...Array.from(new Set(products.map(p=>p.cat)))];
+  let cart = [];
+
+  function renderCats(){
+    $("cat").innerHTML = categories.map(c=>`<option value="${c}">${c}</option>`).join("");
+  }
+
+  function render(){
+    const q = $("q").value.trim().toLowerCase();
+    const cat = $("cat").value || "All";
+    const sort = $("sort").value;
+
+    let list = products.filter(p => (cat==="All" || p.cat===cat));
+    if(q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+
+    if(sort==="low") list = [...list].sort((a,b)=>a.price-b.price);
+    if(sort==="high") list = [...list].sort((a,b)=>b.price-a.price);
+
+    $("count").textContent = `${list.length} products`;
+
+    const grid = $("grid");
+    grid.innerHTML = "";
+    list.forEach(p=>{
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="img"></div>
+        <div class="pad">
+          <p class="name">${p.name}</p>
+          <div class="meta">${p.cat} • ${p.desc}</div>
+        </div>
+        <div class="row">
+          <div class="price">₹${p.price}</div>
+          <button class="btn">Add</button>
+        </div>
+      `;
+      card.querySelector(".btn").onclick = ()=>{
+        cart.push(p);
+        updateCart(`${p.name} added ✅`);
+      };
+      grid.appendChild(card);
+    });
+  }
+
+  function updateCart(msg){
+    $("items").textContent = cart.length;
+    $("total").textContent = cart.reduce((s,x)=>s+x.price,0);
+    $("last").textContent = msg || "Updated.";
+  }
+
+  $("q").addEventListener("input", render);
+  $("cat").addEventListener("change", render);
+  $("sort").addEventListener("change", render);
+
+  $("clear").addEventListener("click", ()=>{
+    $("q").value = "";
+    $("cat").value = "All";
+    $("sort").value = "featured";
+    cart = [];
+    updateCart("Cart cleared 🧹");
+    render();
+  });
+
+  $("checkout").addEventListener("click", ()=>{
+    if(cart.length===0) return alert("Cart is empty 🙂 Add some items first.");
+    alert(`Checkout (demo)\nItems: ${cart.length}\nTotal: ₹${cart.reduce((s,x)=>s+x.price,0)}`);
+  });
+
+  renderCats();
+  render();
+  updateCart("No recent action.");
+</script>
+</body>
+</html>
